@@ -16,6 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from dspost.views import PostListView
+from dsuser.views import RegisterView, LoginView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', PostListView.as_view(),name="timeline"),
+    path('user/register/',RegisterView.as_view(), name="register"),
+    path('user/login/',LoginView.as_view(), name="login")
 ]
+
