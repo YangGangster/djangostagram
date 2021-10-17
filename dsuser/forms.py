@@ -59,6 +59,7 @@ class RegisterForm(forms.Form):
 
 class LoginForm(forms.Form):
     userId = forms.CharField(
+        required=True,
         error_messages={
             'required': '아이디를 입력해주세요.'
         },
@@ -81,18 +82,24 @@ class LoginForm(forms.Form):
         userId = cleaned_data.get('userId')
         password = cleaned_data.get('password')
 
-        if not(cleaned_data) or not(userId and password):
-            self.add_error('password','모든 값을 입력해야 합니다.')
+        print(not password)
+        if not(cleaned_data) or not userId or not password:
+            return self.add_error('password','모든 값을 입력해야 합니다.')
+            
         
+
         if userId:
             user = None
+            
             try:
                 user = Dsuser.objects.get(userId=userId)
             except Dsuser.DoesNotExist :
-                self.add_error('userId','아이디가 없습니다.')
+                return self.add_error('userId','존재하지 않은 유저입니다.')
+                
   
             if not check_password(password,user.password):
-                self.add_error('password','비밀번호를 틀렸습니다.')
+                return self.add_error('password','비밀번호를 틀렸습니다.')
+                
                 
             
             

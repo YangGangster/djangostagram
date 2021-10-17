@@ -34,14 +34,7 @@ class LoginView(FormView):
     success_url = '/'
 
     def form_valid(self,form):
-        userId = form.cleaned_data.get("userId")
-        password = form.cleaned_data.get("password")
-        dsuser = authenticate(self.request, username=userId, password=password)
-        
-        if dsuser is not None:
-            self.request.session['user'] = userId
-            login(self.request, dsuser)
-
+        self.request.session['user'] = form.cleaned_data['userId']
         return super().form_valid(form)
 
 def logout(request):
