@@ -21,7 +21,7 @@ class PostListView(ListView):
     def get_queryset(self):
         posts = Dspost.objects.all().order_by('-registered_date')
         page = int(self.request.GET.get('p',1))
-        paginator = Paginator(posts, 4)
+        paginator = Paginator(posts, len(posts))
         queryset = paginator.get_page(page)
         return queryset
 
