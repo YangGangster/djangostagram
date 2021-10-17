@@ -1,8 +1,6 @@
 from django import forms
 
 from dsuser.models import Dsuser
-from django.core.exceptions import ObjectDoesNotExist
-
 from django.contrib.auth.hashers import check_password
 
 class RegisterForm(forms.Form):
@@ -90,7 +88,7 @@ class LoginForm(forms.Form):
             user = None
             try:
                 user = Dsuser.objects.get(userId=userId)
-            except ObjectDoesNotExist:
+            except Dsuser.DoesNotExist :
                 self.add_error('userId','아이디가 없습니다.')
   
             if not check_password(password,user.password):

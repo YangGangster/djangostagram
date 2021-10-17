@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block contents %}
+<div class="row mt-5 ">
+    <div class="col-12" style="display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;">
+        <h1 style="color: white;">{{post.title}}</h1>
+        <h5 class="text-muted mb-3"> By. {{post.author.userId}}</h5>
+        <div class="card" style="width: 500px;">
+            <img src="{{post.img_url}}" class="card-img-top" alt="..." width="500px" height="500px">
+            <div class="card-body">
+                <p class="card-text">{{post.contents}}</p>
+            </div>
+            <div class="card-footer">
+                <p class="card-text">{{post.registered_date}}</p>
+            </div>
+        </div>
+
+        <div class="col-12 mt-3" style="
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;">
+            {% for tag in post.tags.all%}
+            <h6 class="text-muted">#{{ tag.name }}</h6>
+            {% endfor %}
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12">
+              <a href="/">
+                <button type="submit" class="btn btn-dark" style="border-width: 0px;">Go to Posts</button>  
+              </a>
+            </div>
+          </div>
+
+    </div>
+</div>
+</div>
+{% endblock %}

@@ -16,13 +16,23 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from dspost.views import PostListView
-from dsuser.views import RegisterView, LoginView
+from dspost.views import PostListView, PostCreationView, PostDetailView
+from dsuser.views import RegisterView, LoginView, logout
+
+from django.conf.urls import (handler404)
+
+handler404='dspost.views.page_not_found'
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', PostListView.as_view(),name="timeline"),
     path('user/register/',RegisterView.as_view(), name="register"),
-    path('user/login/',LoginView.as_view(), name="login")
+    path('user/login/',LoginView.as_view(), name="login"),
+    path('upload/',PostCreationView.as_view(), name="upload"),
+    path('post/<int:pk>', PostDetailView.as_view(), name='post'),
+    path('logout',logout,name="logout")
+    
 ]
 

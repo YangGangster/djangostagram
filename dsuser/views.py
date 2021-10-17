@@ -1,7 +1,8 @@
 from django.contrib.auth.hashers import make_password
 from django.db import connections
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
+from django.contrib import auth
 
 import dsuser
 from dsuser.models import Dsuser
@@ -42,3 +43,10 @@ class LoginView(FormView):
             login(self.request, dsuser)
 
         return super().form_valid(form)
+
+def logout(request):
+    if 'user' in request.session:
+        del(request.session['user'])
+
+    return redirect('/user/login')
+    
